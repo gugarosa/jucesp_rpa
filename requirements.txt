@@ -1,0 +1,2 @@
+2captcha-python>=1.0.3
+selenium>=3.141.0

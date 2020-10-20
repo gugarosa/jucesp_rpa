@@ -67,10 +67,18 @@ if __name__ == '__main__':
                 # Gathers its name
                 name = name_column.find('span').text
 
+            # Gathers the city column
+            city_column = row.find('td', class_='item03')
+
+            # If identifier column exists
+            if city_column:
+                # Gathers its city
+                city = city_column.text
+
             # Checks if both variables exist
-            if _id and name:
+            if _id and name and city:
                 # Appends to the output list
-                rows.append([_id, name])
+                rows.append([_id, name, city])
 
     print('Data extracted.')
 

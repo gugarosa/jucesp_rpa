@@ -1,3 +1,4 @@
+import argparse
 import time
 import urllib.request
 
@@ -6,66 +7,94 @@ from selenium import webdriver
 import utils.captcha as c
 import utils.paths as p
 
-print('Creating driver ...')
+def get_arguments():
+    """Gets arguments from the command line.
 
-# Creates the webdriver and gets the URL
-driver = webdriver.Firefox()
-driver.get(p.SEARCH_URL)
-driver.implicitly_wait(p.WAITING_TIME)
+    Returns:
+        A parser with the input arguments.
 
-print('Filling out form ...')
+    """
 
-# Iterates through the form
-for k, v in p.FORM.items():
-    # Fills out the form
-    driver.find_element_by_xpath(v[0]).send_keys(v[1])
+    # Creates the ArgumentParser
+    parser = argparse.ArgumentParser(usage='Performs an advanced search over JUCESP.')
 
-print('Submitting form ...')
+    parser.add_argument('output_file', help='Output .html file', type=str)
 
-# Submits the form and awaits for response
-driver.find_element_by_xpath(p.SUBMIT).click()
-driver.implicitly_wait(p.WAITING_TIME)
+    parser.add_argument('-captcha_file', help='Identifier to the captcha file', type=str, default='captcha.png')
 
-print('Retrieving captcha ...')
+    return parser.parse_args()
 
-# Retrieves and downloads the captcha
-img = driver.find_element_by_xpath(p.CAPTCHA)
-urllib.request.urlretrieve(img.get_attribute('src'), 'captcha.png')
+if __name__ == '__main__':
+    # Gathers the input arguments
+    args = get_arguments()
 
-print('Solving captcha ...')
+    # Gathering variables from arguments
+    output_file = args.output_file
+    captcha_file = args.captcha_file
 
-# Solves the captcha, inputs it, submits the form and awaits for response
-solved_captcha = c.solve('captcha.png')
-driver.find_element_by_xpath(p.CAPTCHA_INPUT).send_keys(solved_captcha)
-driver.find_element_by_xpath(p.CAPTCHA_SUBMIT).click()
+    print('Starting up the driver ...')
 
-print('Iterating results ...')
+    # Creates the webdriver and gets the URL
+    driver = webdriver.Firefox()
+    driver.get(p.SEARCH_URL)
+    driver.implicitly_wait(p.WAITING_TIME)
 
-# Starts the loop
-while True:
-    # Sleeps for a short amount of time
-    time.sleep(p.WAITING_TIME)
+    print('Driver initialized.')
 
-    # Gathers the results table
-    results = driver.find_element_by_xpath(p.RESULTS_TABLE).get_attribute('outerHTML')
+    print('Filling out the form ...')
 
+    # Iterates through the form
+    for k, v in p.FORM.items():
+        # Fills out the form
+        driver.find_element_by_xpath(v[0]).send_keys(v[1])
+
+    # Submits the form and awaits for response
+    driver.find_element_by_xpath(p.FORM_SUBMIT).click()
+
+    print('Form submitted.')
+
+    print('Retrieving and solving captcha ...')
+
+    # Retrieves and downloads the captcha
+    img = driver.find_element_by_xpath(p.CAPTCHA)
+    urllib.request.urlretrieve(img.get_attribute('src'), captcha_file)
+
+    # Solves the captcha, inputs it, submits the form and awaits for response
+    solved_captcha = c.solve(captcha_file)
+    driver.find_element_by_xpath(p.CAPTCHA_INPUT).send_keys(solved_captcha)
+    driver.find_element_by_xpath(p.CAPTCHA_SUBMIT).click()
+
+    print('Captcha solved.')
+
+    print('Dumping data ...')
+    
     # Appends to the output file
-    with open('output.html', 'a') as f:
-        # Writes the results
-        f.write(results)
+    with open(output_file, 'w') as f:
+        # Starts the loop
+        while True:
+            # Sleeps for a short amount of time
+            time.sleep(p.WAITING_TIME)
 
-    # Tries to find the next page href
-    try:
-        # Finds the element
-        next_page = driver.find_element_by_xpath(p.RESULTS_NEXT_PAGE)
+            # Gathers the results table
+            results = driver.find_element_by_xpath(p.RESULTS_TABLE).get_attribute('outerHTML')
 
-    # If element could not be found
-    except:
-        # Breaks the loop
-        break
+            # Writes the results
+            f.write(results)
 
-    # Executes the script
-    driver.execute_script(p.RESULTS_NEXT_PAGE_SCRIPT)
+            # Tries to find the next page href
+            try:
+                # Finds the element
+                next_page = driver.find_element_by_xpath(p.RESULTS_NEXT_PAGE)
 
-# Closes the driver
-driver.close()
+            # If element could not be found
+            except:
+                # Breaks the loop
+                break
+
+            # Executes the script
+            driver.execute_script(p.RESULTS_NEXT_PAGE_SCRIPT)
+
+    print('Data dumped.')
+
+    # Closes the driver
+    driver.close()

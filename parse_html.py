@@ -1,57 +1,88 @@
+import argparse
 import csv
 
 from bs4 import BeautifulSoup
 
-print('Loading HTML ...')
 
-# Loads the input HTML
-html = open('output.html').read()
+def get_arguments():
+    """Gets arguments from the command line.
 
-# Parses with BeautifulSoup
-soup = BeautifulSoup(html, features='html.parser')
+    Returns:
+        A parser with the input arguments.
 
-# Creates an empty list
-rows = []
+    """
 
-print('Parsing tables ...')
+    # Creates the ArgumentParser
+    parser = argparse.ArgumentParser(usage='Parses an .html into a readable .csv.')
 
-# Finds all tables
-tables = soup.find_all('table')
+    parser.add_argument('input_file', help='Input .html file', type=str)
 
-# Iterates through all tables
-for table in tables:
-    # Iterates through all rows
-    for row in table.find_all('tr'):
-        # Defines variables as None
-        _id, name = None, None
+    parser.add_argument('output_file', help='Output .csv file', type=str)
 
-        # Gathers the identifier column
-        id_column = row.find('td', class_='item01')
+    return parser.parse_args()
 
-        # If identifier column exists
-        if id_column:
-            # Gathers its ID
-            _id = id_column.find('a').text
 
-        # Gathers the name column
-        name_column = row.find('td', class_='item02')
+if __name__ == '__main__':
+    # Gathers the input arguments
+    args = get_arguments()
 
-        # If name column exists
-        if name_column:
-            # Gathers its name
-            name = name_column.find('span').text
+    # Gathering variables from arguments
+    input_file = args.input_file
+    output_file = args.output_file
 
-        # Checks if both variables exist
-        if _id and name:
-            # Appends to the output list
-            rows.append([_id, name])
+    print(f'Loading and parsing file from: {input_file}')
 
-# Opens an output CSV file    
-with open('output.csv', 'w') as f:
-    print('Outputting CSV ...')
-    
-    # Creates the writer
-    writer = csv.writer(f)
+    # Parses with BeautifulSoup
+    soup = BeautifulSoup(open(input_file).read(), features='html.parser')
 
-    # Outputs to file
-    writer.writerows(rows)
+    print('File loaded and parsed.')
+
+    # Creates an empty list
+    rows = []
+
+    print('Extracting data ...')
+
+    # Finds all tables
+    tables = soup.find_all('table')
+
+    # Iterates through all tables
+    for table in tables:
+        # Iterates through all rows
+        for row in table.find_all('tr'):
+            # Defines variables as None
+            _id, name = None, None
+
+            # Gathers the identifier column
+            id_column = row.find('td', class_='item01')
+
+            # If identifier column exists
+            if id_column:
+                # Gathers its ID
+                _id = id_column.find('a').text
+
+            # Gathers the name column
+            name_column = row.find('td', class_='item02')
+
+            # If name column exists
+            if name_column:
+                # Gathers its name
+                name = name_column.find('span').text
+
+            # Checks if both variables exist
+            if _id and name:
+                # Appends to the output list
+                rows.append([_id, name])
+
+    print('Data extracted.')
+
+    print(f'Outputting data to: {output_file}')
+
+    # Opens an output CSV file
+    with open(output_file, 'w') as f:
+        # Creates the writer
+        writer = csv.writer(f)
+
+        # Outputs to file
+        writer.writerows(rows)
+
+    print('Data outputted.')

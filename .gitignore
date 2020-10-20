@@ -1,6 +1,7 @@
 # Output files
 *.png
 *.html
+*.csv
 
 # Configuration file
 config.ini

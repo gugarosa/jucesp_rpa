@@ -1,5 +1,5 @@
-import urllib.request
 import time
+import urllib.request
 
 from selenium import webdriver
 

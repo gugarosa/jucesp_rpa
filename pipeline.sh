@@ -1,5 +1,12 @@
-# Performs the advanced search and saves it HTML
-python advanced_search.py
+# Defines the files' names
+HTML_FILE="output.html"
+CSV_FILE="output.csv"
 
-# Cleans the HTML into a CSV
-python parse_html.py
+# Performs the advanced search and saves a .html
+python advanced_search.py $HTML_FILE
+
+# Cleans the .html into a .csv
+python parse_html.py $HTML_FILE $CSV_FILE
+
+# Uses the .csv to dump company information
+python get_information.py $CSV_FILE

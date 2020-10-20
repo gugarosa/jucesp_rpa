@@ -5,7 +5,8 @@ import urllib.request
 from selenium import webdriver
 
 import utils.captcha as c
-import utils.paths as p
+import utils.search_path as p
+
 
 def get_arguments():
     """Gets arguments from the command line.
@@ -15,7 +16,6 @@ def get_arguments():
 
     """
 
-    # Creates the ArgumentParser
     parser = argparse.ArgumentParser(usage='Performs an advanced search over JUCESP.')
 
     parser.add_argument('output_file', help='Output .html file', type=str)
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     # Creates the webdriver and gets the URL
     driver = webdriver.Firefox()
-    driver.get(p.SEARCH_URL)
+    driver.get(p.URL)
     driver.implicitly_wait(p.WAITING_TIME)
 
     print('Driver initialized.')
@@ -67,8 +67,8 @@ if __name__ == '__main__':
     print('Captcha solved.')
 
     print('Dumping data ...')
-    
-    # Appends to the output file
+
+    # Opens an output file
     with open(output_file, 'w') as f:
         # Starts the loop
         while True:
@@ -76,7 +76,7 @@ if __name__ == '__main__':
             time.sleep(p.WAITING_TIME)
 
             # Gathers the results table
-            results = driver.find_element_by_xpath(p.RESULTS_TABLE).get_attribute('outerHTML')
+            results = driver.find_element_by_xpath(p.RESULTS).get_attribute('outerHTML')
 
             # Writes the results
             f.write(results)

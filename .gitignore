@@ -1,3 +1,10 @@
+# Output files
+*.png
+*.html
+
+# Configuration file
+config.ini
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -6,7 +6,8 @@ import urllib.request
 from selenium import webdriver
 
 import utils.captcha as c
-import utils.info_path as p
+import utils.info_path as i
+import utils.search_path as s
 
 
 def get_arguments():
@@ -34,6 +35,19 @@ if __name__ == '__main__':
     input_file = args.input_file
     captcha_file = args.captcha_file
 
+    # Creates the webdriver
+    driver = webdriver.Firefox()
+    driver.implicitly_wait(s.WAITING_TIME)
+
+    # Gets the search URL and uses a caveat to only input captcha once
+    driver.get(s.URL)
+    driver.find_element_by_xpath(s.FORM_SUBMIT).click()
+    img = driver.find_element_by_xpath(s.CAPTCHA)
+    urllib.request.urlretrieve(img.get_attribute('src'), captcha_file)
+    solved_captcha = c.solve(captcha_file)
+    driver.find_element_by_xpath(s.CAPTCHA_INPUT).send_keys(solved_captcha)
+    driver.find_element_by_xpath(s.CAPTCHA_SUBMIT).click()
+
     # Loads the input .csv file
     with open(input_file) as f:
         # Creates an .csv reader
@@ -43,25 +57,14 @@ if __name__ == '__main__':
         for row in reader:
             print(f'Dumping data from ID: {row[0]} ...')
 
-            # Creates the webdriver and gets the URL
-            driver = webdriver.Firefox()
-            driver.get(p.URL + row[0])
-            driver.implicitly_wait(p.WAITING_TIME)
-
-            # Retrieves and downloads the captcha
-            img = driver.find_element_by_xpath(p.CAPTCHA)
-            urllib.request.urlretrieve(img.get_attribute('src'), captcha_file)
-
-            # Solves the captcha, inputs it, submits the form and awaits for response
-            solved_captcha = c.solve(captcha_file)
-            driver.find_element_by_xpath(p.CAPTCHA_INPUT).send_keys(solved_captcha)
-            driver.find_element_by_xpath(p.CAPTCHA_SUBMIT).click()
+            # Gets the URL
+            driver.get(i.URL + row[0])
 
             # Sleeps for a short amount of time
-            time.sleep(p.WAITING_TIME)
+            time.sleep(i.WAITING_TIME)
 
             # Gathers the results
-            results = driver.find_element_by_xpath(p.RESULTS).get_attribute('outerHTML')
+            results = driver.find_element_by_xpath(i.RESULTS).get_attribute('outerHTML')
 
             # Opens an output file
             with open(f'outputs/{row[0]}.html', 'w') as f2:
@@ -69,4 +72,4 @@ if __name__ == '__main__':
 
             print('Data dumped.')
 
-            driver.close()
+    driver.close()

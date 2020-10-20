@@ -64,7 +64,7 @@ if __name__ == '__main__':
             results = driver.find_element_by_xpath(p.RESULTS).get_attribute('outerHTML')
 
             # Opens an output file
-            with open(row[0] + '.html', 'w') as f2:
+            with open(f'outputs/{row[0]}.html', 'w') as f2:
                 f2.write(results)
 
             print('Data dumped.')

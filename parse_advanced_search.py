@@ -12,7 +12,7 @@ def get_arguments():
 
     """
 
-    parser = argparse.ArgumentParser(usage='Parses an .html into a readable .csv.')
+    parser = argparse.ArgumentParser(usage='Parses advanced search .html into a readable .csv.')
 
     parser.add_argument('input_file', help='Input .html file', type=str)
 

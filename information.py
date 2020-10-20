@@ -18,7 +18,7 @@ def get_arguments():
 
     """
 
-    parser = argparse.ArgumentParser(usage='Loads a .csv and extract information over JUCESP.')
+    parser = argparse.ArgumentParser(usage='Loads an advanced search .csv and extracts information over JUCESP.')
 
     parser.add_argument('input_file', help='Input .csv file', type=str)
 

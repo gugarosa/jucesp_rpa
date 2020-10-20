@@ -33,6 +33,6 @@ def solve(file_path):
         return result['code']
 
     # If an exception has been raised
-    except Exception as e:        
+    except Exception as e:
         # Returns the exception
         return e

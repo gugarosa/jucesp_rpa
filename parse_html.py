@@ -1,5 +1,8 @@
-from bs4 import BeautifulSoup
 import csv
+
+from bs4 import BeautifulSoup
+
+print('Loading HTML ...')
 
 # Loads the input HTML
 html = open('output.html').read()
@@ -9,6 +12,8 @@ soup = BeautifulSoup(html, features='html.parser')
 
 # Creates an empty list
 rows = []
+
+print('Parsing tables ...')
 
 # Finds all tables
 tables = soup.find_all('table')
@@ -43,6 +48,8 @@ for table in tables:
 
 # Opens an output CSV file    
 with open('output.csv', 'w') as f:
+    print('Outputting CSV ...')
+    
     # Creates the writer
     writer = csv.writer(f)
 

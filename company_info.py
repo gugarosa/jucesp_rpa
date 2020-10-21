@@ -49,7 +49,7 @@ if __name__ == '__main__':
     # Loads the input .csv file
     with open(input_file) as f:
         # Creates an .csv reader
-        reader = csv.reader(f, delimiter=',')
+        reader = csv.reader(f, delimiter=';')
 
         # Iterates over the reader
         for row in reader:

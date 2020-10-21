@@ -87,7 +87,7 @@ if __name__ == '__main__':
     # Opens an output CSV file
     with open(output_file, 'w') as f:
         # Creates the writer
-        writer = csv.writer(f)
+        writer = csv.writer(f, delimiter=';')
 
         # Outputs to file
         writer.writerows(rows)

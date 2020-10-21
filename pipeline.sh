@@ -1,7 +1,7 @@
 # Defines the files' names
 HTML_FILE="advanced_search.html"
 CSV_FILE="companies.csv"
-COMPANY_FILE="parse_companies.csv"
+COMPANY_FILE="parsed_companies.csv"
 
 # Performs the advanced search and saves a .html
 python advanced_search.py $HTML_FILE

@@ -5,9 +5,9 @@ import urllib.request
 
 from selenium import webdriver
 
+import paths.advanced_search as s
+import paths.company_info as i
 import utils.captcha as c
-import utils.info_path as i
-import utils.search_path as s
 
 
 def get_arguments():
@@ -18,11 +18,9 @@ def get_arguments():
 
     """
 
-    parser = argparse.ArgumentParser(usage='Loads an advanced search .csv and extracts information over JUCESP.')
+    parser = argparse.ArgumentParser(usage='Loads a companies .csv and extracts information over JUCESP.')
 
     parser.add_argument('input_file', help='Input .csv file', type=str)
-
-    parser.add_argument('-captcha_file', help='Identifier to the captcha file', type=str, default='captcha.png')
 
     return parser.parse_args()
 
@@ -33,7 +31,7 @@ if __name__ == '__main__':
 
     # Gathering variables from arguments
     input_file = args.input_file
-    captcha_file = args.captcha_file
+    captcha_file = 'captcha.png'
 
     # Creates the webdriver
     driver = webdriver.Firefox()
@@ -67,7 +65,7 @@ if __name__ == '__main__':
             results = driver.find_element_by_xpath(i.RESULTS).get_attribute('outerHTML')
 
             # Opens an output file
-            with open(f'outputs/{row[0]}.html', 'w') as f2:
+            with open(f'companies/{row[0]}.html', 'w') as f2:
                 f2.write(results)
 
             print('Data dumped.')

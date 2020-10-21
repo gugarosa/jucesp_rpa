@@ -4,8 +4,8 @@ import urllib.request
 
 from selenium import webdriver
 
+import paths.advanced_search as p
 import utils.captcha as c
-import utils.search_path as p
 
 
 def get_arguments():
@@ -20,8 +20,6 @@ def get_arguments():
 
     parser.add_argument('output_file', help='Output .html file', type=str)
 
-    parser.add_argument('-captcha_file', help='Identifier to the captcha file', type=str, default='captcha.png')
-
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -30,7 +28,7 @@ if __name__ == '__main__':
 
     # Gathering variables from arguments
     output_file = args.output_file
-    captcha_file = args.captcha_file
+    captcha_file = 'captcha.png'
 
     print('Starting up the driver ...')
 

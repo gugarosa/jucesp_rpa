@@ -12,7 +12,7 @@ FORM = {
 }
 FORM_SUBMIT = '//*[@id="ctl00_cphContent_frmBuscaAvancada_btPesquisar"]'
 
-# Capctha x-paths
+# Captcha x-paths
 CAPTCHA = '/html/body/div[3]/form/div[3]/div[4]/div[2]/div/div/table/tbody/tr[1]/td/div/div[1]/img'
 CAPTCHA_INPUT = '/html/body/div[3]/form/div[3]/div[4]/div[2]/div/div/table/tbody/tr[1]/td/div/div[2]/label/input'
 CAPTCHA_SUBMIT = '//*[@id="ctl00_cphContent_gdvResultadoBusca_btEntrar"]'

@@ -14,3 +14,6 @@ python company_info.py $CSV_FILE
 
 # Parses companies information into a readable .csv
 python parse_company_info.py $COMPANY_FILE
+
+# Removing temporary files
+rm $HTML_FILE companies/*.html

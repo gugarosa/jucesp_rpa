@@ -6,9 +6,17 @@ URL = 'https://www.jucesponline.sp.gov.br/BuscaAvancada.aspx'
 
 # Form x-paths
 FORM = {
-    'city': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtMunicipio"]', 'araraquara'),
-    'start_date': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataAberturaInicio"]', '01/09/2020'),
-    'end_date': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataAberturaFim"]', '30/09/2020')
+    # 'razao_social': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtRazaoSocial"]', ''),
+    # 'tipo_empresa:': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_ddlTipoEmpresa"]', ''),
+    # 'objeto': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtObjeto"]', ''),
+    # 'capital_min': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtCapitalMin"]', ''),
+    # 'capital_max': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtCapitalMax"]', ''),
+    'data_abertura_inicio': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataAberturaInicio"]', '01/09/2020'),
+    'data_abertura_fim': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataAberturaFim"]', '30/09/2020'),
+    # 'data_dissolucao_inicio': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataDissolucaoInicio"]', ''),
+    # 'data_dissolucao_fim': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataDissolucaoFim"]', ''),
+    # 'empresa_ativa': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_chkAtivas"]', ''),
+    'municipio': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtMunicipio"]', 'araraquara')
 }
 FORM_SUBMIT = '//*[@id="ctl00_cphContent_frmBuscaAvancada_btPesquisar"]'
 

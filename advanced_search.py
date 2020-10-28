@@ -43,8 +43,15 @@ if __name__ == '__main__':
 
     # Iterates through the form
     for k, v in p.FORM.items():
-        # Fills out the form
-        driver.find_element_by_xpath(v[0]).send_keys(v[1])
+        # Check if it is a checkbox
+        if k == 'empresa_ativa':
+            # Click the box
+            driver.find_element_by_xpath(v[0]).click()
+
+        # If is not a checkbox
+        else: 
+            # Fills out the form
+            driver.find_element_by_xpath(v[0]).send_keys(v[1])
 
     # Submits the form and awaits for response
     driver.find_element_by_xpath(p.FORM_SUBMIT).click()

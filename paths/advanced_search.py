@@ -16,7 +16,15 @@ FORM = {
     # 'data_dissolucao_inicio': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataDissolucaoInicio"]', ''),
     # 'data_dissolucao_fim': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDataDissolucaoFim"]', ''),
     # 'empresa_ativa': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_chkAtivas"]', ''),
-    'municipio': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtMunicipio"]', 'araraquara')
+    # 'logradouro': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtLogradouro"]', ''),
+    # 'cep': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtCep"]', ''),
+    # 'bairro': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtBairro"]', ''),
+    'municipio': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtMunicipio"]', 'araraquara'),
+    # 'estado': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_ddlEstado"]', 'SP'),
+    # 'numero_documento': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtNumDoc"]', ''),
+    # 'sessao': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtSessao"]', ''),
+    # 'tipo_arquivamento': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_ddlTipoAto"]', ''),
+    # 'descricao': ('//*[@id="ctl00_cphContent_frmBuscaAvancada_txtDescricao"]', '')
 }
 FORM_SUBMIT = '//*[@id="ctl00_cphContent_frmBuscaAvancada_btPesquisar"]'
 

@@ -58,7 +58,7 @@ python parse_company_info.py -h
 
 ### Bash Script
 
-Instead of invoking every script to conduct the experiments, it is also possible to use the provided shell script, as follows:
+Instead of invoking every script to conduct the automation, it is also possible to use the provided shell script, as follows:
 
 ```Bash
 ./pipeline.sh
